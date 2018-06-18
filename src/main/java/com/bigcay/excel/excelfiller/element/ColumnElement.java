@@ -1,6 +1,6 @@
 package com.bigcay.excel.excelfiller.element;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.bigcay.excel.excelfiller.ExcelContext;
 import com.bigcay.excel.excelfiller.template.AbstractTemplate;
@@ -73,7 +73,7 @@ public class ColumnElement extends AbstractElement {
 		}
 	}
 	
-	private void insertData(Object[] columnData, int col, int startRow, boolean applyCellStyleFlag, HSSFCellStyle cellStyle) {
+	private void insertData(Object[] columnData, int col, int startRow, boolean applyCellStyleFlag, XSSFCellStyle cellStyle) {
 		for (int index = 0; index < columnData.length; index++) {
 			CellElement cellElement = new CellElement(this.startRow + index, this.col, excelContext);
 			cellElement.setValue(columnData[index]);
@@ -87,7 +87,7 @@ public class ColumnElement extends AbstractElement {
 	}
 	
     private void insertData(Object[] columnData, int col, int startRow, boolean applyCellStyleFlag, int rowCharNumber,
-            float unitRowHeightInPoint, HSSFCellStyle cellStyle) {
+            float unitRowHeightInPoint, XSSFCellStyle cellStyle) {
         for (int index = 0; index < columnData.length; index++) {
             CellElement cellElement = new CellElement(this.startRow + index, this.col, excelContext);
             Object value = columnData[index];

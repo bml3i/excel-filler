@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import com.bigcay.excel.excelfiller.ExcelContext;
 import com.bigcay.excel.excelfiller.font.BoldFontUpdater;
@@ -31,7 +31,7 @@ import com.bigcay.excel.excelfiller.util.TemplateUtil;
 
 public class CellElement extends AbstractElement {
 
-	private List<HSSFCell> workingCells = new ArrayList<HSSFCell>();
+	private List<XSSFCell> workingCells = new ArrayList<XSSFCell>();
 	
 	private static BoldFontUpdater boldFont = new BoldFontUpdater();
 	private static ItalicFontUpdater italicFont = new ItalicFontUpdater();
@@ -43,7 +43,7 @@ public class CellElement extends AbstractElement {
 		super(excelContext);
 	}
 
-	public List<HSSFCell> getWorkingCells() {
+	public List<XSSFCell> getWorkingCells() {
 		return workingCells;
 	}
 
@@ -53,24 +53,24 @@ public class CellElement extends AbstractElement {
 	}
 
 	protected CellElement add(int row, int col) {
-		HSSFCell cell = getCell(row, col);
+		XSSFCell cell = getCell(row, col);
 		workingCells.add(cell);
 		return this;
 	}
 
-	protected HSSFCell getCell(int row, int col) {
-		return ExcelUtil.getHSSFCell(this.workingSheet, row, col);
+	protected XSSFCell getCell(int row, int col) {
+		return ExcelUtil.getXSSFCell(this.workingSheet, row, col);
 	}
 
 	public CellElement setValue(Object value) {
-		for (HSSFCell cell : workingCells) {
+		for (XSSFCell cell : workingCells) {
 			this.setCellValue(cell, value, null);
 		}
 		return this;
 	}
 	
     public CellElement setValue(Object value, AbstractTemplate template) {
-        for (HSSFCell cell : workingCells) {
+        for (XSSFCell cell : workingCells) {
             this.setCellValue(cell, value, null);
         }
         
@@ -84,16 +84,16 @@ public class CellElement extends AbstractElement {
         return this;
     }
 
-	private void setCellValue(HSSFCell cell, Object value, String pattern) {
+	private void setCellValue(XSSFCell cell, Object value, String pattern) {
 		if (value instanceof Double || value instanceof Float
 				|| value instanceof Long || value instanceof Integer
 				|| value instanceof Short || value instanceof BigDecimal
 				|| value instanceof Byte) {
 			cell.setCellValue(convert2Double(value));
-			cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+			cell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
 		} else if (value instanceof Boolean) {
 			cell.setCellValue((Boolean) value);
-			cell.setCellType(HSSFCell.CELL_TYPE_BOOLEAN);
+			cell.setCellType(XSSFCell.CELL_TYPE_BOOLEAN);
 		} else {
 			if (value instanceof Date) {
 				if (pattern == null || pattern.trim().length() == 0) {
@@ -101,9 +101,9 @@ public class CellElement extends AbstractElement {
 				}
 				cell.setCellValue((Date) value);
 			} else {
-				cell.setCellValue(new HSSFRichTextString(value == null ? ""
+				cell.setCellValue(new XSSFRichTextString(value == null ? ""
 						: value.toString()));
-				cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cell.setCellType(XSSFCell.CELL_TYPE_STRING);
 			}
 		}
 
@@ -112,13 +112,14 @@ public class CellElement extends AbstractElement {
 		}
 	}
 
+	// TO-DO
 	public CellElement dataFormat(String format) {
-		short index = HSSFDataFormat.getBuiltinFormat(format);
-		for (HSSFCell cell : workingCells) {
-			HSSFCellStyle style = cell.getCellStyle();
+		short index = excelContext.getWorkbook().createDataFormat().getFormat(format);
+		for (XSSFCell cell : workingCells) {
+			XSSFCellStyle style = cell.getCellStyle();
 			tempCellStyle.cloneStyleFrom(style);
 			if (index == -1) {
-				HSSFDataFormat dataFormat = excelContext.getWorkbook()
+				XSSFDataFormat dataFormat = excelContext.getWorkbook()
 						.createDataFormat();
 				index = dataFormat.getFormat(format);
 			}
@@ -129,23 +130,23 @@ public class CellElement extends AbstractElement {
 	}
 
 	public CellElement applyCellStyle(int row, int col) {
-		HSSFCellStyle geneticCellStyle = this.getCell(row, col).getCellStyle();
-		for (HSSFCell cell : workingCells) {
+		XSSFCellStyle geneticCellStyle = this.getCell(row, col).getCellStyle();
+		for (XSSFCell cell : workingCells) {
 			cell.setCellStyle(geneticCellStyle);
 		}
 		return this;
 	}
 	
-	public CellElement applyCellStyle(HSSFCellStyle cellStyle) {
-		for (HSSFCell cell : workingCells) {
+	public CellElement applyCellStyle(XSSFCellStyle cellStyle) {
+		for (XSSFCell cell : workingCells) {
 			cell.setCellStyle(cellStyle);
 		}
 		return this;
 	}
 
 	public CellElement align(Align align) {
-		for (HSSFCell cell : workingCells) {
-			HSSFCellStyle style = cell.getCellStyle();
+		for (XSSFCell cell : workingCells) {
+			XSSFCellStyle style = cell.getCellStyle();
 			tempCellStyle.cloneStyleFrom(style);
 			tempCellStyle.setAlignment(align.getAlignment());
 			updateCellStyle(cell);
@@ -158,8 +159,8 @@ public class CellElement extends AbstractElement {
 	}
 
 	public CellElement bgColor(Color bg, FillPattern fillPattern) {
-		for (HSSFCell cell : workingCells) {
-			HSSFCellStyle style = cell.getCellStyle();
+		for (XSSFCell cell : workingCells) {
+			XSSFCellStyle style = cell.getCellStyle();
 			tempCellStyle.cloneStyleFrom(style);
 			tempCellStyle.setFillPattern(fillPattern.getFillPattern());
 			tempCellStyle.setFillForegroundColor(bg.getIndex());
@@ -169,16 +170,16 @@ public class CellElement extends AbstractElement {
 	}
 	
 	public CellElement height(float height){
-		for (HSSFCell cell : workingCells) {
-			HSSFRow row = getRow(cell.getRowIndex());
+		for (XSSFCell cell : workingCells) {
+			XSSFRow row = getRow(cell.getRowIndex());
 			row.setHeightInPoints(height);
 		}
 		return this;
 	}
 	
     public CellElement setHigherHeight(float height) {
-        for (HSSFCell cell : workingCells) {
-            HSSFRow row = getRow(cell.getRowIndex());
+        for (XSSFCell cell : workingCells) {
+            XSSFRow row = getRow(cell.getRowIndex());
             if(row.getHeightInPoints() < height) {
                 row.setHeightInPoints(height);                
             }
@@ -215,9 +216,9 @@ public class CellElement extends AbstractElement {
 	}
 	
 	public CellElement font(IFontUpdater fontUpdater) {
-		Map<Integer, HSSFFont> fontPool = excelContext.getFontPool();
-		for (HSSFCell cell : workingCells) {
-			HSSFFont font = cell.getCellStyle().getFont(workbook);
+		Map<Integer, XSSFFont> fontPool = excelContext.getFontPool();
+		for (XSSFCell cell : workingCells) {
+			XSSFFont font = cell.getCellStyle().getFont();
 			copyFont(font, tempFont);
 			fontUpdater.updateFont(new Font(tempFont));
 			int fontHash = tempFont.hashCode() - tempFont.getIndex();
@@ -225,7 +226,7 @@ public class CellElement extends AbstractElement {
 			if (fontPool.containsKey(fontHash)) {
 				tempCellStyle.setFont(fontPool.get(fontHash));
 			} else {
-				HSSFFont newFont = workbook.createFont();
+				XSSFFont newFont = workbook.createFont();
 				copyFont(tempFont, newFont);
 				tempCellStyle.setFont(newFont);
 				int newFontHash = newFont.hashCode() - newFont.getIndex();
@@ -236,7 +237,7 @@ public class CellElement extends AbstractElement {
 		return this;
 	}
 	
-	private void copyFont(HSSFFont sourceFont, HSSFFont targetFont) {
+	private void copyFont(XSSFFont sourceFont, XSSFFont targetFont) {
 		targetFont.setBold(sourceFont.getBold());
 		targetFont.setCharSet(sourceFont.getCharSet());
 		targetFont.setColor(sourceFont.getColor());
@@ -249,13 +250,13 @@ public class CellElement extends AbstractElement {
 		targetFont.setUnderline(sourceFont.getUnderline());
 	}
 
-	private void updateCellStyle(HSSFCell cell) {
-		Map<Integer, HSSFCellStyle> stylePool = excelContext.getStylePool();
+	private void updateCellStyle(XSSFCell cell) {
+		Map<Integer, XSSFCellStyle> stylePool = excelContext.getStylePool();
 		int tempStyleHash = tempCellStyle.hashCode() - tempCellStyle.getIndex();
 		if (stylePool.containsKey(tempStyleHash)) {
 			cell.setCellStyle(stylePool.get(tempStyleHash));
 		} else {
-			HSSFCellStyle newStyle = workbook.createCellStyle();
+			XSSFCellStyle newStyle = workbook.createCellStyle();
 			newStyle.cloneStyleFrom(tempCellStyle);
 			cell.setCellStyle(newStyle);
 			int newStyleHash = newStyle.hashCode() - newStyle.getIndex();

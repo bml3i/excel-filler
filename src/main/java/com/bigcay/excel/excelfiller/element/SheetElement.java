@@ -1,13 +1,13 @@
 package com.bigcay.excel.excelfiller.element;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.ss.util.WorkbookUtil;
 
 import com.bigcay.excel.excelfiller.ExcelContext;
 
 public class SheetElement extends AbstractElement {
     
-    private HSSFSheet sheet;
+    private XSSFSheet sheet;
     
     private int sheetIndex;
     
@@ -15,7 +15,7 @@ public class SheetElement extends AbstractElement {
         super(excelContext);
     }
     
-    public SheetElement(HSSFSheet sheet, ExcelContext excelContext) {
+    public SheetElement(XSSFSheet sheet, ExcelContext excelContext) {
         super(excelContext);
         this.sheet = sheet;
         sheetIndex = workbook.getSheetIndex(this.sheet);

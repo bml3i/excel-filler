@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 
 import com.bigcay.excel.excelfiller.beans.ReferenceCell;
@@ -49,16 +49,16 @@ public class Excel {
 	}
 
 	public Excel(String filePath, Map<String, Object> excelData, DefaultStyle defaultStyle) {
-		HSSFWorkbook workbook;
-		HSSFCellStyle tempCellStyle;
-		HSSFFont tempFont;
+		XSSFWorkbook workbook;
+		XSSFCellStyle tempCellStyle;
+		XSSFFont tempFont;
 
 		if (filePath == null || filePath.trim().length() == 0) {
-			workbook = new HSSFWorkbook();
+			workbook = new XSSFWorkbook();
 		} else {
 			workbook = this.readExcelTemplate(filePath);
 			if (workbook == null) {
-				workbook = new HSSFWorkbook();
+				workbook = new XSSFWorkbook();
 			}
 		}
 
@@ -85,11 +85,11 @@ public class Excel {
 	 * @param filePath
 	 * @return
 	 */
-	private HSSFWorkbook readExcelTemplate(String filePath) {
-		HSSFWorkbook workbook = null;
+	private XSSFWorkbook readExcelTemplate(String filePath) {
+		XSSFWorkbook workbook = null;
 
 		try {
-			workbook = new HSSFWorkbook(new FileInputStream(filePath));
+			workbook = new XSSFWorkbook(new FileInputStream(filePath));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -126,17 +126,17 @@ public class Excel {
 		return result;
 	}
 
-	public HSSFWorkbook exportWorkbook() {
+	public XSSFWorkbook exportWorkbook() {
 		return excelContext.getWorkbook();
 	}
 
 	public SheetElement setWorkingSheet(int index) {
-		excelContext.setWorkingSheet(ExcelUtil.getHSSFSheet(excelContext.getWorkbook(), index));
+		excelContext.setWorkingSheet(ExcelUtil.getXSSFSheet(excelContext.getWorkbook(), index));
 		return this.sheet(index);
 	}
 
 	public SheetElement sheet(int index) {
-		SheetElement sheetElement = new SheetElement(ExcelUtil.getHSSFSheet(excelContext.getWorkbook(), index), excelContext);
+		SheetElement sheetElement = new SheetElement(ExcelUtil.getXSSFSheet(excelContext.getWorkbook(), index), excelContext);
 		return sheetElement;
 	}
 
@@ -165,16 +165,16 @@ public class Excel {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fillTemplateData() {
 		for (int sheetIndex = 0; sheetIndex < excelContext.getWorkbook().getNumberOfSheets(); sheetIndex++) {
-			HSSFSheet sheet = excelContext.getWorkbook().getSheetAt(sheetIndex);
+			XSSFSheet sheet = excelContext.getWorkbook().getSheetAt(sheetIndex);
 			excelContext.setWorkingSheet(sheet);
 
 			List<AbstractTemplate> templateList = new ArrayList<AbstractTemplate>();
 			Map<String, List<ColumnTemplate>> columnListTemplateMap = new TreeMap<String, List<ColumnTemplate>>();
 
 			for (Iterator rit = sheet.rowIterator(); rit.hasNext();) {
-				HSSFRow row = (HSSFRow) rit.next();
+				XSSFRow row = (XSSFRow) rit.next();
 				for (Iterator cit = row.cellIterator(); cit.hasNext();) {
-					HSSFCell cell = (HSSFCell) cit.next();
+					XSSFCell cell = (XSSFCell) cit.next();
 					if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
 						AbstractTemplate template = TemplateUtil.generateTemplate(cell.getRowIndex(), cell.getColumnIndex(),
 								cell.getStringCellValue(), cell.getCellStyle());
@@ -284,7 +284,7 @@ public class Excel {
 			// Clear all the template expression
 			for (AbstractTemplate template : templateList) {
 				CellElement cellElem = this.cell(template.getRow(), template.getCol());
-				HSSFCell cell = cellElem.getWorkingCells().get(0);
+				XSSFCell cell = cellElem.getWorkingCells().get(0);
 
 				if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
 					if (TemplateUtil.isValidTemplateCode(cell.getStringCellValue())) {

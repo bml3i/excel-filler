@@ -1,6 +1,6 @@
 package com.bigcay.excel.excelfiller.beans;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 public class ReferenceCell {
 
@@ -9,7 +9,7 @@ public class ReferenceCell {
 		this.col = col;
 	}
 	
-	public ReferenceCell(int row, int col, HSSFCellStyle cellStyle) {
+	public ReferenceCell(int row, int col, XSSFCellStyle cellStyle) {
 		this(row, col);
 		this.cellStyle = cellStyle;
 	}
@@ -18,7 +18,7 @@ public class ReferenceCell {
 
 	private int col;
 
-	private HSSFCellStyle cellStyle;
+	private XSSFCellStyle cellStyle;
 
 	public int getRow() {
 		return row;
@@ -36,11 +36,11 @@ public class ReferenceCell {
 		this.col = col;
 	}
 
-	public HSSFCellStyle getCellStyle() {
+	public XSSFCellStyle getCellStyle() {
 		return cellStyle;
 	}
 
-	public void setCellStyle(HSSFCellStyle cellStyle) {
+	public void setCellStyle(XSSFCellStyle cellStyle) {
 		this.cellStyle = cellStyle;
 	}
 

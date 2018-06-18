@@ -1,21 +1,21 @@
 package com.bigcay.excel.excelfiller.element;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.bigcay.excel.excelfiller.ExcelContext;
 import com.bigcay.excel.excelfiller.util.ExcelUtil;
 
 public abstract class AbstractElement {
 
-	protected HSSFWorkbook workbook;
-	protected HSSFSheet workingSheet;
-	protected HSSFCellStyle tempCellStyle;
-	protected HSSFFont tempFont;
+	protected XSSFWorkbook workbook;
+	protected XSSFSheet workingSheet;
+	protected XSSFCellStyle tempCellStyle;
+	protected XSSFFont tempFont;
 	protected ExcelContext excelContext;
 
 	public AbstractElement(ExcelContext excelContext) {
@@ -26,15 +26,15 @@ public abstract class AbstractElement {
 		this.tempFont = excelContext.getTempFont();
 	}
 
-	protected HSSFRow getRow(int row) {
-		return ExcelUtil.getHSSFRow(this.workingSheet, row);
+	protected XSSFRow getRow(int row) {
+		return ExcelUtil.getXSSFRow(this.workingSheet, row);
 	}
 
-	protected HSSFCell getCell(int row, int col) {
-		return ExcelUtil.getHSSFCell(this.workingSheet, row, col);
+	protected XSSFCell getCell(int row, int col) {
+		return ExcelUtil.getXSSFCell(this.workingSheet, row, col);
 	}
 
-	protected HSSFCell getCell(HSSFRow row, int col) {
-		return ExcelUtil.getHSSFCell(row, col);
+	protected XSSFCell getCell(XSSFRow row, int col) {
+		return ExcelUtil.getXSSFCell(row, col);
 	}
 }

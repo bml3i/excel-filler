@@ -1,6 +1,6 @@
 package com.bigcay.excel.excelfiller.template;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 public abstract class AbstractTemplate {
 
@@ -10,7 +10,7 @@ public abstract class AbstractTemplate {
 
 	protected String templateType;
 
-	protected HSSFCellStyle templateStyle;
+	protected XSSFCellStyle templateStyle;
 
 	protected String templateCode;
 
@@ -29,7 +29,7 @@ public abstract class AbstractTemplate {
 	}
 	
 	public AbstractTemplate(int row, int col, String templateType,
-			String templateCode, HSSFCellStyle templateStyle) {
+			String templateCode, XSSFCellStyle templateStyle) {
 		this(row, col, templateType,templateCode);
 		this.templateStyle = templateStyle;
 	}
@@ -58,11 +58,11 @@ public abstract class AbstractTemplate {
 		this.templateType = templateType;
 	}
 
-	public HSSFCellStyle getTemplateStyle() {
+	public XSSFCellStyle getTemplateStyle() {
 		return templateStyle;
 	}
 
-	public void setTemplateStyle(HSSFCellStyle templateStyle) {
+	public void setTemplateStyle(XSSFCellStyle templateStyle) {
 		this.templateStyle = templateStyle;
 	}
 

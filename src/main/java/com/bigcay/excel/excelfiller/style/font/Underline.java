@@ -1,18 +1,18 @@
 package com.bigcay.excel.excelfiller.style.font;
 
-import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 public enum Underline {
 	
-	NONE(HSSFFont.U_NONE),
+	NONE(XSSFFont.U_NONE),
 
-	SINGLE(HSSFFont.U_SINGLE),
+	SINGLE(XSSFFont.U_SINGLE),
 
-	DOUBLE(HSSFFont.U_DOUBLE),
+	DOUBLE(XSSFFont.U_DOUBLE),
 
-	SINGLE_ACCOUNTING(HSSFFont.U_SINGLE_ACCOUNTING),
+	SINGLE_ACCOUNTING(XSSFFont.U_SINGLE_ACCOUNTING),
 
-	DOUBLE_ACCOUNTING(HSSFFont.U_DOUBLE_ACCOUNTING);
+	DOUBLE_ACCOUNTING(XSSFFont.U_DOUBLE_ACCOUNTING);
 
 	private byte line;
 

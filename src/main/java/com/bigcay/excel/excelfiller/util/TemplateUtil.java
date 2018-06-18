@@ -3,7 +3,7 @@ package com.bigcay.excel.excelfiller.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.bigcay.excel.excelfiller.template.AbstractTemplate;
 import com.bigcay.excel.excelfiller.template.CellTemplate;
@@ -30,7 +30,7 @@ public class TemplateUtil {
 
 	public final static String MATRIX_DYADIC_ARRAY_TYPE = "matrix.2-dim-array";
 
-	public static AbstractTemplate generateTemplate(int row, int col, String value, HSSFCellStyle cellStyle) {
+	public static AbstractTemplate generateTemplate(int row, int col, String value, XSSFCellStyle cellStyle) {
 		Matcher matcher = TEMPLATE_ELEMENT_PATTERN.matcher(value);
 		if (matcher.find()) {
 			if (matcher.groupCount() >= 2) {

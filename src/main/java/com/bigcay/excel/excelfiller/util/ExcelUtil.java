@@ -1,13 +1,13 @@
 package com.bigcay.excel.excelfiller.util;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtil {
     
-    public static HSSFSheet getHSSFSheet(HSSFWorkbook workbook, int index) {
+    public static XSSFSheet getXSSFSheet(XSSFWorkbook workbook, int index) {
         if (index > workbook.getNumberOfSheets() - 1) {
             workbook.createSheet();
             return workbook.getSheetAt(workbook.getNumberOfSheets() - 1);
@@ -16,21 +16,21 @@ public class ExcelUtil {
         }
     }
     
-    public static HSSFCell getHSSFCell(HSSFSheet sheet, int row, int col) {
-        HSSFRow r = getHSSFRow(sheet, row);
-        return getHSSFCell(r, col);
+    public static XSSFCell getXSSFCell(XSSFSheet sheet, int row, int col) {
+        XSSFRow r = getXSSFRow(sheet, row);
+        return getXSSFCell(r, col);
     }
     
-    public static HSSFRow getHSSFRow(HSSFSheet sheet, int row) {
-        HSSFRow r = sheet.getRow(row);
+    public static XSSFRow getXSSFRow(XSSFSheet sheet, int row) {
+        XSSFRow r = sheet.getRow(row);
         if (r == null) {
             r = sheet.createRow(row);
         }
         return r;
     }
     
-    public static HSSFCell getHSSFCell(HSSFRow row, int col) {
-        HSSFCell c = row.getCell(col);
+    public static XSSFCell getXSSFCell(XSSFRow row, int col) {
+        XSSFCell c = row.getCell(col);
         if (c == null) {
             c = row.createCell(col);
         }

@@ -1,13 +1,13 @@
 package com.bigcay.excel.excelfiller.style.font;
 
-import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import com.bigcay.excel.excelfiller.style.Color;
 
 public class Font {
-	private HSSFFont font;
+	private XSSFFont font;
 
-	public Font(HSSFFont font) {
+	public Font(XSSFFont font) {
 		this.font = font;
 	}
 
@@ -28,7 +28,7 @@ public class Font {
 	
 	public Font color(Color color) {
 		if (color.equals(Color.AUTOMATIC)) {
-			font.setColor(HSSFFont.COLOR_NORMAL);
+			font.setColor(XSSFFont.COLOR_NORMAL);
 		} else {
 			font.setColor(color.getIndex());
 		}

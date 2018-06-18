@@ -1,6 +1,6 @@
 package com.bigcay.excel.excelfiller.template;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 public class ColumnTemplate extends AbstractTemplate {
 
@@ -24,7 +24,7 @@ public class ColumnTemplate extends AbstractTemplate {
         this.methodName = methodName;
     }
     
-    public ColumnTemplate(int row, int col, String templateType, String templateCode, HSSFCellStyle templateStyle) {
+    public ColumnTemplate(int row, int col, String templateType, String templateCode, XSSFCellStyle templateStyle) {
         super(row, col, templateType, templateCode, templateStyle);
     }
 }

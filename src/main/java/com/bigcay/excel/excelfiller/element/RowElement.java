@@ -1,13 +1,13 @@
 package com.bigcay.excel.excelfiller.element;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import com.bigcay.excel.excelfiller.ExcelContext;
 import com.bigcay.excel.excelfiller.beans.ReferenceCell;
 
 public class RowElement extends AbstractElement {
 
-	private HSSFRow row;
+	private XSSFRow row;
 
 	private int startCol;
 
@@ -50,7 +50,7 @@ public class RowElement extends AbstractElement {
 		return this;
 	}
 
-	private void insertData(Object[] rowData, HSSFRow row, int startCol, boolean applyCellStyleFlag) {
+	private void insertData(Object[] rowData, XSSFRow row, int startCol, boolean applyCellStyleFlag) {
 		for (int index = 0; index < rowData.length; index++) {
 			CellElement cellElement = new CellElement(row.getRowNum(), startCol + index, excelContext);
 			cellElement.setValue(rowData[index]);
@@ -62,7 +62,7 @@ public class RowElement extends AbstractElement {
 		}
 	}
 	
-    private void insertData(Object[] rowData, HSSFRow row, int startCol, ReferenceCell refCell) {
+    private void insertData(Object[] rowData, XSSFRow row, int startCol, ReferenceCell refCell) {
         for (int index = 0; index < rowData.length; index++) {
             CellElement cellElement = new CellElement(row.getRowNum(), startCol + index, excelContext);
             cellElement.setValue(rowData[index]);
