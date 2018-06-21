@@ -8,6 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>excel-filler</name>
+	<description>this project provides us an easy way to fill data into excel file</description>
 	<url>https://github.com/bml3i/excel-filler</url>
 
 	<properties>
